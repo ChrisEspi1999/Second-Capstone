@@ -1,9 +1,12 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Balance;
+import com.techelevator.tenmo.model.UserAccount;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.UserAccountService;
 
 public class App {
 
@@ -13,6 +16,8 @@ public class App {
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
 
     private AuthenticatedUser currentUser;
+
+    private UserAccountService userAccountService;
 
     public static void main(String[] args) {
         App app = new App();
@@ -85,9 +90,17 @@ public class App {
     }
 
 	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
-		
-	}
+        // TODO Auto-generated method stub
+        UserAccountService userAccountService = new UserAccountService(API_BASE_URL);
+        try {
+            userAccountService.getBalance(currentUser);
+        }catch (NullPointerException e){
+
+        }
+        System.out.println("Your balance is $" + userAccountService.getBalance(currentUser));
+    }
+
+
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
