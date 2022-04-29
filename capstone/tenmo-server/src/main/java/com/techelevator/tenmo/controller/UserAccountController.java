@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
-
 public class UserAccountController {
 
     private UserAccountDAO userAccountDAO;
@@ -24,7 +23,7 @@ public class UserAccountController {
         this.userAccountDAO = userAccountDAO;
         this.userDao = userDao;
     }
-    @RequestMapping(path = "/balance/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "balance", method = RequestMethod.GET)
     public Balance getBalance(Principal principal){
         System.out.println(principal.getName());
         return userAccountDAO.getBalance(principal.getName());

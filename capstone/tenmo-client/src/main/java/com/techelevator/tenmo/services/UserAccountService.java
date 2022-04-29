@@ -14,25 +14,26 @@ import java.math.BigDecimal;
 
 public class UserAccountService implements UserAccountServ{
 
+    private final AuthenticatedUser authenticatedUser;
     private RestTemplate restTemplate = new RestTemplate();
-    private String BASE_URL;
-    private AuthenticatedUser currentUser;
+    private String baseUrl = "http://localhost:8080/";
 
-    public UserAccountService(String url) {
+    public UserAccountService(String url, AuthenticatedUser authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
         this.restTemplate = new RestTemplate();
-        this.BASE_URL = url;
+        this.baseUrl = url;
     }
 
     @Override
-    public Balance getBalance(AuthenticatedUser authenticatedUser) {
-        HttpEntity entity = makeEntity(authenticatedUser);
-        Balance balance = null;
+    public BigDecimal getBalance() {
+        BigDecimal balance = new BigDecimal(1000);
         try {
-            balance = restTemplate.exchange(BASE_URL + "balance", HttpMethod.GET, entity, Balance.class).getBody();
+            balance = restTemplate.exchange(baseUrl + "balance", HttpMethod.GET, makeEntity(), BigDecimal.class).getBody();
             System.out.println("Your balance is $" + balance);
         }catch (RestClientException | NullPointerException e){
-            System.out.println();
+            System.out.println("Something went wrong.");
         }
+
         return balance;
     }
 
@@ -46,7 +47,7 @@ public class UserAccountService implements UserAccountServ{
         return null;
     }
 
-    private HttpEntity makeEntity(AuthenticatedUser authenticatedUser) {
+    private HttpEntity makeEntity() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(authenticatedUser.getToken());
         HttpEntity entity = new HttpEntity(httpHeaders);
