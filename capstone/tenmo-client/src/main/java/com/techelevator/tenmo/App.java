@@ -1,10 +1,7 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.*;
-import com.techelevator.tenmo.services.AuthenticationService;
-import com.techelevator.tenmo.services.ConsoleService;
-import com.techelevator.tenmo.services.TransferServ;
-import com.techelevator.tenmo.services.UserAccountService;
+import com.techelevator.tenmo.services.*;
 
 public class App {
 
@@ -90,13 +87,10 @@ public class App {
 	private void viewCurrentBalance() {
         // TODO Auto-generated method stub
         UserAccountService userAccountService = new UserAccountService(API_BASE_URL, currentUser);
-        try {
-            userAccountService.getBalance();
-        }catch (NullPointerException e){
+        System.out.println("Your balance is $" + userAccountService.getBalance());
 
         }
-        System.out.println("Your balance is $" + userAccountService.getBalance());
-    }
+
 
 
 
@@ -113,12 +107,22 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+        UserService userService = new UserService();
+		User [] users = userService.getAllUsers(currentUser);
+        userOptions(currentUser, users);
+        int userId = consoleService.promptForInt("\nEnter ID to transfer");
+
+
 	}
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub
 		
 	}
+    private void userOptions(AuthenticatedUser authenticatedUser, User[] users){
+        System.out.println("-------------------------------------------");
+        System.out.println("Users");
+        System.out.println("ID          Name");
+        System.out.println("-------------------------------------------");    }
 
 }

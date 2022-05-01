@@ -1,7 +1,9 @@
 package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.TransferStatus;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JDBCTransferStatusDAO implements TransferStatusDAO{
 
     //To do

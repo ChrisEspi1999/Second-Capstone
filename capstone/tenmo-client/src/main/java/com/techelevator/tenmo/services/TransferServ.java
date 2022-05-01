@@ -12,11 +12,11 @@ import org.springframework.web.client.RestTemplate;
 
 public class TransferServ implements TransferService{
 
-    private String BASE_URL;
+    private String baseUrl = "http://localhost:8080/";
     private RestTemplate restTemplate = new RestTemplate();
 
     public TransferServ(String BASE_URL) {
-        this.BASE_URL = BASE_URL;
+        this.baseUrl = BASE_URL;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class TransferServ implements TransferService{
         headers.setBearerAuth(authenticatedUser.getToken());
         HttpEntity<Transfer> entity = new HttpEntity<>(transfer,headers);
 
-        String url = BASE_URL + "transfer/" + transfer.getTransferId();
+        String url = baseUrl + "transfer/" + transfer.getTransferId();
 
         try{
             restTemplate.exchange(url, HttpMethod.POST, entity, Transfer.class);
@@ -41,7 +41,7 @@ public class TransferServ implements TransferService{
         Transfer[] transfers = new Transfer[0];
 
         try{
-            transfers = restTemplate.exchange(BASE_URL + "transfer", HttpMethod.GET, entity(authenticatedUser), Transfer[].class).getBody();
+            transfers = restTemplate.exchange(baseUrl + "transfer", HttpMethod.GET, entity(authenticatedUser), Transfer[].class).getBody();
         }catch (RestClientResponseException | ResourceAccessException e){
             System.out.println();
         }
@@ -52,7 +52,7 @@ public class TransferServ implements TransferService{
     public Transfer[] pendingTransferByUserId(AuthenticatedUser authenticatedUser) {
         Transfer[] transfers = null;
         try {
-            transfers = restTemplate.exchange(BASE_URL + "transfer/user/{id}" + authenticatedUser.getUser().getId() + "/pending", HttpMethod.GET, entity(authenticatedUser), Transfer[].class).getBody();
+            transfers = restTemplate.exchange(baseUrl + "transfer/user/{id}" + authenticatedUser.getUser().getId() + "/pending", HttpMethod.GET, entity(authenticatedUser), Transfer[].class).getBody();
         }catch (RestClientResponseException | ResourceAccessException e){
             System.out.println();
         }
@@ -63,7 +63,7 @@ public class TransferServ implements TransferService{
     public Transfer[] transferFromUserId(AuthenticatedUser authenticatedUser, int userId) {
         Transfer[] transfers = null;
         try {
-            transfers = restTemplate.exchange(BASE_URL + "transfer/user/{id}" + authenticatedUser.getUser().getId(), HttpMethod.GET, entity(authenticatedUser), Transfer[].class).getBody();
+            transfers = restTemplate.exchange(baseUrl + "transfer/user/{id}" + authenticatedUser.getUser().getId(), HttpMethod.GET, entity(authenticatedUser), Transfer[].class).getBody();
         }catch (RestClientResponseException | ResourceAccessException e){
             System.out.println();
         }
@@ -74,7 +74,7 @@ public class TransferServ implements TransferService{
     public Transfer transferFromTransferId(AuthenticatedUser authenticatedUser, int id) {
         Transfer transfers = null;
         try {
-            transfers = restTemplate.exchange(BASE_URL + "transfer/" + id, HttpMethod.GET, entity(authenticatedUser), Transfer.class).getBody();
+            transfers = restTemplate.exchange(baseUrl + "transfer/" + id, HttpMethod.GET, entity(authenticatedUser), Transfer.class).getBody();
         }catch (RestClientResponseException | ResourceAccessException e){
             System.out.println();
         }
@@ -88,7 +88,7 @@ public class TransferServ implements TransferService{
         headers.setBearerAuth(authenticatedUser.getToken());
         HttpEntity<Transfer> entity = new HttpEntity<>(transfer, headers);
 
-        String url = BASE_URL + "transfer/" + transfer.getTransferId();
+        String url = baseUrl + "transfer/" + transfer.getTransferId();
 
         try {
             restTemplate.exchange(url, HttpMethod.GET, entity, Transfer.class);

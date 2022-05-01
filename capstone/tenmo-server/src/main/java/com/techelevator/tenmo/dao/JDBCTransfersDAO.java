@@ -3,11 +3,13 @@ package com.techelevator.tenmo.dao;
 import com.techelevator.tenmo.model.Transfers;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JDBCTransfersDAO implements TransfersDAO {
 
     private JdbcTemplate jdbcTemplate;

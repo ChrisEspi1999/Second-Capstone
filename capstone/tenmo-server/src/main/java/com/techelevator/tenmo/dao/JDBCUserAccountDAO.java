@@ -5,10 +5,11 @@ import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserAccount;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
-
+@Component
 public class JDBCUserAccountDAO implements UserAccountDAO {
 
     private final JdbcTemplate jdbcTemplate;
@@ -17,7 +18,7 @@ public class JDBCUserAccountDAO implements UserAccountDAO {
     }
     @Override
     public Balance getBalance(String user) {
-        String sql = "SELECT balance FROM account JOIN tenmo_users ON account.user_id = tenmo_user.user_id WHERE username = ?";
+        String sql = "SELECT balance FROM account JOIN tenmo_user ON account.user_id = tenmo_user.user_id WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user);
         Balance balance = new Balance();
 

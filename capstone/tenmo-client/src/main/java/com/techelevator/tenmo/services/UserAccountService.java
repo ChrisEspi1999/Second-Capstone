@@ -26,15 +26,16 @@ public class UserAccountService implements UserAccountServ{
 
     @Override
     public BigDecimal getBalance() {
-        BigDecimal balance = new BigDecimal(1000);
-        try {
-            balance = restTemplate.exchange(baseUrl + "balance", HttpMethod.GET, makeEntity(), BigDecimal.class).getBody();
-            System.out.println("Your balance is $" + balance);
-        }catch (RestClientException | NullPointerException e){
-            System.out.println("Something went wrong.");
-        }
+        Balance balance = null;
+        balance = restTemplate.exchange(baseUrl + "balance", HttpMethod.GET, makeEntity(), Balance.class).getBody();
 
-        return balance;
+//        try {
+//
+//        }catch (RestClientException | NullPointerException e){
+//            System.out.println("Something went wrong.");
+//        }
+
+        return balance.getBalance();
     }
 
     @Override
