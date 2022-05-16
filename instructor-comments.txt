@@ -1,0 +1,8 @@
+- On TransferController.java: There are some unused variables. You can remove the userDao and the path
+variable for the id. 
+- You are missing the security annotations on your controllers.
+- You are missing the functionality to view transfer history.
+- The client side functionality to send TE Bucks does not work, upon clicking it we get an exception
+- Most of the requests you are trying to do on the client side do not have a mapping on the server side
+ready to pick up on the request. You need to make sure your controller on the server is in synch with
+the Transfer Service on the client side.
